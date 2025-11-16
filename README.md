@@ -1,296 +1,253 @@
-# Context Engineering Template
+# 🚴 一日北高挑戰 | Taipei to Kaohsiung Cycling Challenge
 
-A comprehensive template for getting started with Context Engineering - the discipline of engineering context for AI coding assistants so they have the information necessary to get the job done end to end.
+一款策略型腳踏車競賽遊戲，挑戰在 24 小時內完成台北到高雄 380 公里的長途騎行！
 
-> **Context Engineering is 10x better than prompt engineering and 100x better than vibe coding.**
+## 🎮 遊戲簡介
 
-## 🚀 Quick Start
+透過策略規劃團隊陣容、腳踏車裝備和破風隊形，在最短時間內完成一日北高挑戰。遊戲融合了團隊管理、資源分配、即時策略等元素，讓玩家體驗長途自行車賽的魅力。
 
-```bash
-# 1. Clone this template
-git clone https://github.com/coleam00/Context-Engineering-Intro.git
-cd Context-Engineering-Intro
+### 核心特色
 
-# 2. Set up your project rules (optional - template provided)
-# Edit CLAUDE.md to add your project-specific guidelines
+- 🎯 **策略規劃** - 平衡預算、選擇最佳團隊組合與裝備
+- 👥 **角色系統** - 4 種專業角色，各有獨特能力
+- 🚲 **裝備系統** - 豐富的車架、輪組、變速系統選擇
+- 🌪️ **破風隊形** - 3 種隊形策略，影響速度與體力消耗
+- ⚡ **即時模擬** - 真實物理計算，動態事件系統
+- 📊 **分數評級** - S/A/B/C/D 評級系統，挑戰最高分
 
-# 3. Add examples (highly recommended)
-# Place relevant code examples in the examples/ folder
+## 🎯 遊戲目標
 
-# 4. Create your initial feature request
-# Edit INITIAL.md with your feature requirements
+在 24 小時限制內，帶領團隊完成台北到高雄 380 公里的挑戰，獲得最高評分！
 
-# 5. Generate a comprehensive PRP (Product Requirements Prompt)
-# In Claude Code, run:
-/generate-prp INITIAL.md
+## 📖 玩法說明
 
-# 6. Execute the PRP to implement your feature
-# In Claude Code, run:
-/execute-prp PRPs/your-feature-name.md
-```
+### 1. 選擇團隊 (預算: $5000)
 
-## 📚 Table of Contents
+從 4 種角色中選擇 2-4 位隊員：
 
-- [What is Context Engineering?](#what-is-context-engineering)
-- [Template Structure](#template-structure)
-- [Step-by-Step Guide](#step-by-step-guide)
-- [Writing Effective INITIAL.md Files](#writing-effective-initialmd-files)
-- [The PRP Workflow](#the-prp-workflow)
-- [Using Examples Effectively](#using-examples-effectively)
-- [Best Practices](#best-practices)
+- **🚵 爬坡手 (Climber)** - 山路加成 +20%，高海拔適應
+- **⚡ 衝刺手 (Sprinter)** - 平路加速 +25%，速度專家
+- **🛡️ 副將 (Domestique)** - 隊友體力恢復 +15%，團隊協作
+- **🎯 全能型 (All-Rounder)** - 平衡型選手，適應各種地形
 
-## What is Context Engineering?
+### 2. 配置裝備
 
-Context Engineering represents a paradigm shift from traditional prompt engineering:
+選擇合適的腳踏車零件：
 
-### Prompt Engineering vs Context Engineering
+- **車架** - 影響重量與空氣動力
+- **輪組** - 決定滾動效率
+- **變速系統** - 影響爬坡與加速能力
 
-**Prompt Engineering:**
-- Focuses on clever wording and specific phrasing
-- Limited to how you phrase a task
-- Like giving someone a sticky note
+### 3. 設定隊形
 
-**Context Engineering:**
-- A complete system for providing comprehensive context
-- Includes documentation, examples, rules, patterns, and validation
-- Like writing a full screenplay with all the details
+選擇最佳破風隊形：
 
-### Why Context Engineering Matters
+- **單線隊形** - 20% 風阻減少
+- **雙線並行** - 15% 風阻減少
+- **火車陣型** - 25% 風阻減少
 
-1. **Reduces AI Failures**: Most agent failures aren't model failures - they're context failures
-2. **Ensures Consistency**: AI follows your project patterns and conventions
-3. **Enables Complex Features**: AI can handle multi-step implementations with proper context
-4. **Self-Correcting**: Validation loops allow AI to fix its own mistakes
+### 4. 開始競賽
 
-## Template Structure
+- 實時監控團隊狀態（體力、士氣、速度）
+- 應對隨機事件（天氣變化、機械故障、補給站）
+- 適時輪替領騎，管理體力分配
+- 在 380 公里路線中完成挑戰！
 
-```
-context-engineering-intro/
-├── .claude/
-│   ├── commands/
-│   │   ├── generate-prp.md    # Generates comprehensive PRPs
-│   │   └── execute-prp.md     # Executes PRPs to implement features
-│   └── settings.local.json    # Claude Code permissions
-├── PRPs/
-│   ├── templates/
-│   │   └── prp_base.md       # Base template for PRPs
-│   └── EXAMPLE_multi_agent_prp.md  # Example of a complete PRP
-├── examples/                  # Your code examples (critical!)
-├── CLAUDE.md                 # Global rules for AI assistant
-├── INITIAL.md               # Template for feature requests
-├── INITIAL_EXAMPLE.md       # Example feature request
-└── README.md                # This file
-```
+## 🎨 技術棧
 
-This template doesn't focus on RAG and tools with context engineering because I have a LOT more in store for that soon. ;)
+### 前端框架
+- **React 18** - 使用 Hooks 與函數式組件
+- **Redux Toolkit** - 狀態管理
+- **React Router** - 頁面路由
+- **Vite** - 建構工具
 
-## Step-by-Step Guide
+### UI/UX
+- **Tailwind CSS** - 原子化 CSS 框架
+- **GSAP** - 動畫引擎
+- **React Hot Toast** - 通知系統
 
-### 1. Set Up Global Rules (CLAUDE.md)
+### 開發工具
+- **ESLint** - 程式碼檢查
+- **Prettier** - 程式碼格式化
+- **Vitest** - 單元測試
 
-The `CLAUDE.md` file contains project-wide rules that the AI assistant will follow in every conversation. The template includes:
+## 🚀 快速開始
 
-- **Project awareness**: Reading planning docs, checking tasks
-- **Code structure**: File size limits, module organization
-- **Testing requirements**: Unit test patterns, coverage expectations
-- **Style conventions**: Language preferences, formatting rules
-- **Documentation standards**: Docstring formats, commenting practices
+### 環境需求
 
-**You can use the provided template as-is or customize it for your project.**
+- Node.js 18+
+- npm 或 yarn
 
-### 2. Create Your Initial Feature Request
-
-Edit `INITIAL.md` to describe what you want to build:
-
-```markdown
-## FEATURE:
-[Describe what you want to build - be specific about functionality and requirements]
-
-## EXAMPLES:
-[List any example files in the examples/ folder and explain how they should be used]
-
-## DOCUMENTATION:
-[Include links to relevant documentation, APIs, or MCP server resources]
-
-## OTHER CONSIDERATIONS:
-[Mention any gotchas, specific requirements, or things AI assistants commonly miss]
-```
-
-**See `INITIAL_EXAMPLE.md` for a complete example.**
-
-### 3. Generate the PRP
-
-PRPs (Product Requirements Prompts) are comprehensive implementation blueprints that include:
-
-- Complete context and documentation
-- Implementation steps with validation
-- Error handling patterns
-- Test requirements
-
-They are similar to PRDs (Product Requirements Documents) but are crafted more specifically to instruct an AI coding assistant.
-
-Run in Claude Code:
-```bash
-/generate-prp INITIAL.md
-```
-
-**Note:** The slash commands are custom commands defined in `.claude/commands/`. You can view their implementation:
-- `.claude/commands/generate-prp.md` - See how it researches and creates PRPs
-- `.claude/commands/execute-prp.md` - See how it implements features from PRPs
-
-The `$ARGUMENTS` variable in these commands receives whatever you pass after the command name (e.g., `INITIAL.md` or `PRPs/your-feature.md`).
-
-This command will:
-1. Read your feature request
-2. Research the codebase for patterns
-3. Search for relevant documentation
-4. Create a comprehensive PRP in `PRPs/your-feature-name.md`
-
-### 4. Execute the PRP
-
-Once generated, execute the PRP to implement your feature:
+### 安裝步驟
 
 ```bash
-/execute-prp PRPs/your-feature-name.md
+# 克隆專案
+git clone https://github.com/YOUR_USERNAME/board-game-bike.git
+cd board-game-bike
+
+# 安裝依賴
+npm install
+
+# 啟動開發伺服器
+npm run dev
+
+# 打開瀏覽器訪問
+# http://localhost:5173
 ```
 
-The AI coding assistant will:
-1. Read all context from the PRP
-2. Create a detailed implementation plan
-3. Execute each step with validation
-4. Run tests and fix any issues
-5. Ensure all success criteria are met
+### 建構部署
 
-## Writing Effective INITIAL.md Files
+```bash
+# 建構生產版本
+npm run build
 
-### Key Sections Explained
-
-**FEATURE**: Be specific and comprehensive
-- ❌ "Build a web scraper"
-- ✅ "Build an async web scraper using BeautifulSoup that extracts product data from e-commerce sites, handles rate limiting, and stores results in PostgreSQL"
-
-**EXAMPLES**: Leverage the examples/ folder
-- Place relevant code patterns in `examples/`
-- Reference specific files and patterns to follow
-- Explain what aspects should be mimicked
-
-**DOCUMENTATION**: Include all relevant resources
-- API documentation URLs
-- Library guides
-- MCP server documentation
-- Database schemas
-
-**OTHER CONSIDERATIONS**: Capture important details
-- Authentication requirements
-- Rate limits or quotas
-- Common pitfalls
-- Performance requirements
-
-## The PRP Workflow
-
-### How /generate-prp Works
-
-The command follows this process:
-
-1. **Research Phase**
-   - Analyzes your codebase for patterns
-   - Searches for similar implementations
-   - Identifies conventions to follow
-
-2. **Documentation Gathering**
-   - Fetches relevant API docs
-   - Includes library documentation
-   - Adds gotchas and quirks
-
-3. **Blueprint Creation**
-   - Creates step-by-step implementation plan
-   - Includes validation gates
-   - Adds test requirements
-
-4. **Quality Check**
-   - Scores confidence level (1-10)
-   - Ensures all context is included
-
-### How /execute-prp Works
-
-1. **Load Context**: Reads the entire PRP
-2. **Plan**: Creates detailed task list using TodoWrite
-3. **Execute**: Implements each component
-4. **Validate**: Runs tests and linting
-5. **Iterate**: Fixes any issues found
-6. **Complete**: Ensures all requirements met
-
-See `PRPs/EXAMPLE_multi_agent_prp.md` for a complete example of what gets generated.
-
-## Using Examples Effectively
-
-The `examples/` folder is **critical** for success. AI coding assistants perform much better when they can see patterns to follow.
-
-### What to Include in Examples
-
-1. **Code Structure Patterns**
-   - How you organize modules
-   - Import conventions
-   - Class/function patterns
-
-2. **Testing Patterns**
-   - Test file structure
-   - Mocking approaches
-   - Assertion styles
-
-3. **Integration Patterns**
-   - API client implementations
-   - Database connections
-   - Authentication flows
-
-4. **CLI Patterns**
-   - Argument parsing
-   - Output formatting
-   - Error handling
-
-### Example Structure
-
-```
-examples/
-├── README.md           # Explains what each example demonstrates
-├── cli.py             # CLI implementation pattern
-├── agent/             # Agent architecture patterns
-│   ├── agent.py      # Agent creation pattern
-│   ├── tools.py      # Tool implementation pattern
-│   └── providers.py  # Multi-provider pattern
-└── tests/            # Testing patterns
-    ├── test_agent.py # Unit test patterns
-    └── conftest.py   # Pytest configuration
+# 預覽建構結果
+npm run preview
 ```
 
-## Best Practices
+## 📁 專案結構
 
-### 1. Be Explicit in INITIAL.md
-- Don't assume the AI knows your preferences
-- Include specific requirements and constraints
-- Reference examples liberally
+```
+board-game-bike/
+├── src/
+│   ├── components/       # React 元件
+│   │   ├── ui/          # 通用 UI 元件
+│   │   ├── CharacterCard.jsx
+│   │   ├── ErrorBoundary.jsx
+│   │   └── HelpModal.jsx
+│   ├── data/            # 遊戲資料
+│   │   ├── characters.js
+│   │   ├── bikeParts.js
+│   │   ├── routes.js
+│   │   └── events.js
+│   ├── hooks/           # 自定義 Hooks
+│   │   └── useGameLoop.js
+│   ├── pages/           # 頁面元件
+│   │   ├── StartPage.jsx
+│   │   ├── SetupPage.jsx
+│   │   ├── GamePage.jsx
+│   │   └── ResultsPage.jsx
+│   ├── services/        # 遊戲邏輯
+│   │   ├── calculations.js
+│   │   ├── gameEngine.js
+│   │   └── storage.js
+│   ├── store/           # Redux Store
+│   │   ├── gameSlice.js
+│   │   ├── teamSlice.js
+│   │   ├── bikeSlice.js
+│   │   ├── playerSlice.js
+│   │   └── store.js
+│   ├── utils/           # 工具函數
+│   │   └── constants.js
+│   ├── App.jsx
+│   └── main.jsx
+├── public/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml   # GitHub Actions 部署
+├── index.html
+├── vite.config.js
+├── tailwind.config.js
+└── package.json
+```
 
-### 2. Provide Comprehensive Examples
-- More examples = better implementations
-- Show both what to do AND what not to do
-- Include error handling patterns
+## 🎮 遊戲機制
 
-### 3. Use Validation Gates
-- PRPs include test commands that must pass
-- AI will iterate until all validations succeed
-- This ensures working code on first try
+### 速度計算
 
-### 4. Leverage Documentation
-- Include official API docs
-- Add MCP server resources
-- Reference specific documentation sections
+```javascript
+speed = baseSpeed × formationBonus × aeroDynamics × weatherFactor × terrainFactor
+```
 
-### 5. Customize CLAUDE.md
-- Add your conventions
-- Include project-specific rules
-- Define coding standards
+### 體力消耗
 
-## Resources
+- 領騎者：1.5x 體力消耗
+- 跟隨者：1.0x 體力消耗
+- 當體力 < 30% 時自動輪替領騎
 
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
-- [Context Engineering Best Practices](https://www.philschmid.de/context-engineering)
+### 分數計算
+
+- ⏱️ **時間獎勵** - 完成時間越短，獎勵越高
+- 👥 **團隊獎勵** - 完成人數比例
+- ⚡ **效率獎勵** - 平均體力保持
+- 💰 **預算獎勵** - 節省預算獎勵
+- 🎯 **事件處理** - 成功應對事件
+- ❌ **故障扣分** - 機械故障懲罰
+
+## 🔧 遊戲設定
+
+### LocalStorage 持久化
+
+遊戲狀態自動保存至瀏覽器 LocalStorage：
+
+- 遊戲進度自動保存
+- 支援繼續遊戲功能
+- 排行榜記錄（Top 10）
+
+### 效能優化
+
+- React.memo 元件記憶化
+- useMemo/useCallback Hooks 優化
+- 程式碼分割 (Code Splitting)
+- Lazy Loading 路由
+
+## 🚀 GitHub Pages 部署
+
+### 自動部署
+
+專案已配置 GitHub Actions 自動部署：
+
+1. 推送代碼到 `main` 分支
+2. GitHub Actions 自動建構
+3. 部署至 GitHub Pages
+
+### 手動部署步驟
+
+```bash
+# 1. 確保 vite.config.js 中的 base 設定正確
+# base: '/board-game-bike/'
+
+# 2. 建構專案
+npm run build
+
+# 3. 推送到 GitHub
+git add .
+git commit -m "Deploy to GitHub Pages"
+git push origin main
+
+# 4. 在 GitHub repo 設定中啟用 GitHub Pages
+# Settings > Pages > Source: GitHub Actions
+```
+
+訪問遊戲：`https://YOUR_USERNAME.github.io/board-game-bike/`
+
+## 🐛 已知問題
+
+- [ ] 移動端觸控優化待改進
+- [ ] 音效系統尚未實作
+
+## 🗺️ 開發路線圖
+
+- [x] 核心遊戲機制
+- [x] UI/UX 設計
+- [x] LocalStorage 持久化
+- [x] 錯誤邊界處理
+- [x] 效能優化
+- [x] GitHub Pages 部署
+- [ ] 單元測試完善
+- [ ] 音效與音樂
+- [ ] 多語言支援
+- [ ] 成就系統
+- [ ] 排行榜線上同步
+
+## 📄 授權
+
+MIT License
+
+## 🙏 致謝
+
+感謝所有為台灣自行車運動做出貢獻的選手與愛好者！
+
+---
+
+**Made with ❤️ and 🚴 in Taiwan**
