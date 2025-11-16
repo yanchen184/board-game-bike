@@ -11,6 +11,7 @@ const StartPage = lazy(() => import('./pages/StartPage'));
 const SetupPage = lazy(() => import('./pages/SetupPage'));
 const GamePage = lazy(() => import('./pages/GamePage'));
 const ResultsPage = lazy(() => import('./pages/ResultsPage'));
+const LeaderboardPage = lazy(() => import('./pages/LeaderboardPage'));
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/setup" element={<SetupPage />} />
                 <Route path="/game" element={<GamePage />} />
                 <Route path="/results" element={<ResultsPage />} />
+                <Route path="/leaderboard" element={<LeaderboardPage />} />
               </Routes>
             </Suspense>
 

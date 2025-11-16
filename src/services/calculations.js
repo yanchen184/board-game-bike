@@ -1,4 +1,4 @@
-import { FORMATION_BONUSES, TERRAIN_TYPES } from '../utils/constants';
+import { FORMATION_BONUSES, FORMATION_PENALTIES, STAMINA_DRAIN, TERRAIN_TYPES } from '../utils/constants';
 
 /**
  * Calculate current speed based on team, bike, weather, and terrain
@@ -45,6 +45,10 @@ export function calculateSpeed(team, bike, weather, terrain) {
           team.members.reduce((sum, m) => sum + (m.baseStats?.climbing || 70), 0) /
           team.members.length;
         terrainMultiplier = 0.6 + (climbingBonus / 100) * 0.3; // 60-90% speed on uphills
+
+        // Apply formation penalty on uphill (train formation harder to maintain on climbs)
+        const formationPenalty = FORMATION_PENALTIES[team.formation] || 0;
+        terrainMultiplier *= (1 - formationPenalty);
         break;
       case TERRAIN_TYPES.DOWNHILL:
         terrainMultiplier = 1.2; // 20% faster downhill
@@ -96,10 +100,10 @@ export function calculateStaminaDrain(speed, formation, terrain, memberIndex, cu
     baseDrain *= 0.7; // Easier downhill
   }
 
-  // Leader drains faster
+  // Leader drains faster (increased from 1.5x to 2.0x for better balance)
   const isLeader = memberIndex === currentLeader;
   if (isLeader) {
-    baseDrain *= 1.5; // 50% more drain for leader
+    baseDrain *= STAMINA_DRAIN.LEADER; // 2.0x more drain for leader
   }
 
   // Formation affects drain (better formation = less drain for non-leaders)

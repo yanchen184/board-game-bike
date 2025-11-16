@@ -1,0 +1,98 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function validateScore(data) {
+      // Score must be between 0 and 5000
+      return data.totalScore >= 0 && data.totalScore <= 5000;
+    }
+
+    function validateTime(data) {
+      // Completion time must be between 6-24 hours (21600-86400 seconds)
+      return data.completionTime >= 21600 && data.completionTime <= 86400;
+    }
+
+    function validateSpeed(data) {
+      // Average speed must be realistic (15-65 km/h for 380km)
+      let avgSpeed = 380 / (data.completionTime / 3600);
+      return avgSpeed >= 15 && avgSpeed <= 65;
+    }
+
+    function validateTeam(data) {
+      // Team size must be 2-4
+      return data.totalTeamSize >= 2 && data.totalTeamSize <= 4
+        && data.teamFinished >= 0 && data.teamFinished <= data.totalTeamSize;
+    }
+
+    function rateLimit() {
+      // Check if user hasn't submitted too many scores recently
+      // This is a simplified version - in production, use Cloud Functions
+      return true;
+    }
+
+    // Leaderboard collection
+    match /leaderboard/{entryId} {
+      // Anyone can read leaderboard
+      allow read: if true;
+
+      // Only authenticated users can create entries
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && validateScore(request.resource.data)
+        && validateTime(request.resource.data)
+        && validateSpeed(request.resource.data)
+        && validateTeam(request.resource.data)
+        && rateLimit()
+        && request.resource.data.keys().hasAll([
+          'userId', 'playerName', 'totalScore', 'completionTime',
+          'teamFinished', 'totalTeamSize', 'timestamp', 'checksum'
+        ]);
+
+      // Users can only update their own entries (not recommended, prefer create-only)
+      allow update: if isSignedIn()
+        && isOwner(resource.data.userId)
+        && validateScore(request.resource.data)
+        && validateTime(request.resource.data);
+
+      // Users can only delete their own entries
+      allow delete: if isSignedIn() && isOwner(resource.data.userId);
+    }
+
+    // User profiles collection
+    match /userProfiles/{userId} {
+      // Users can read their own profile
+      allow read: if isSignedIn() && isOwner(userId);
+
+      // Users can create/update their own profile
+      allow create, update: if isSignedIn() && isOwner(userId);
+
+      // Users can delete their own profile
+      allow delete: if isSignedIn() && isOwner(userId);
+    }
+
+    // Game records collection (detailed game data)
+    match /game_records/{recordId} {
+      // Users can read their own records
+      allow read: if isSignedIn()
+        && resource.data.userId == request.auth.uid;
+
+      // Users can create their own records
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && validateScore(request.resource.data)
+        && validateTime(request.resource.data);
+
+      // No updates or deletes allowed for records (immutable audit trail)
+      allow update, delete: if false;
+    }
+  }
+}

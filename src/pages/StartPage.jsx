@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
+import { Trophy } from 'lucide-react';
 import Button from '../components/ui/Button';
 import HelpModal from '../components/HelpModal';
 import { resetGame } from '../store/gameSlice';
@@ -103,7 +104,7 @@ function StartPage() {
         </p>
 
         {/* Buttons */}
-        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           {hasSavedGame && (
             <Button size="lg" variant="primary" onClick={handleContinue}>
               ▶️ 繼續遊戲
@@ -113,6 +114,27 @@ function StartPage() {
           <Button size="lg" onClick={handleStart}>
             🚴 {hasSavedGame ? '新遊戲' : '開始挑戰'}
           </Button>
+
+          <button
+            onClick={() => navigate('/leaderboard')}
+            className="relative px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500
+                     text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl
+                     transform hover:scale-105 transition-all duration-300 overflow-hidden
+                     flex items-center gap-2"
+          >
+            <Trophy className="w-6 h-6" />
+            <span>排行榜</span>
+
+            {/* 脈動光環效果 */}
+            <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-orange-400
+                           animate-pulse opacity-30 pointer-events-none" />
+
+            {/* NEW 標籤 (可選) */}
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs
+                           px-2 py-1 rounded-full animate-bounce">
+              NEW!
+            </span>
+          </button>
 
           <Button size="lg" variant="secondary" onClick={() => setShowHelp(true)}>
             📖 遊戲說明

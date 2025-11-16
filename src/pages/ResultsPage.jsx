@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
+import { Trophy, TrendingUp } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import { calculateFinalScore } from '../services/calculations';
@@ -9,6 +10,7 @@ import { clearGameState, addToLeaderboard } from '../services/storage';
 import { resetGame } from '../store/gameSlice';
 import { resetTeam } from '../store/teamSlice';
 import { resetBike } from '../store/bikeSlice';
+import firebaseLeaderboard from '../services/firebase/leaderboard.service';
 
 function ResultsPage() {
   const navigate = useNavigate();
@@ -16,8 +18,46 @@ function ResultsPage() {
   const location = useLocation();
   const { summary, gameState } = location.state || {};
 
+  const [globalRank, setGlobalRank] = useState(null);
+  const [showRankAnimation, setShowRankAnimation] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
   const scoreRef = useRef(null);
   const cardsRef = useRef(null);
+
+  // Submit to global leaderboard function using Firebase
+  const submitToGlobalLeaderboard = async (scoreData, gameData) => {
+    try {
+      setSubmitting(true);
+
+      const result = await firebaseLeaderboard.submitScore({
+        playerName: '玩家', // Can be customized later
+        totalScore: scoreData.totalScore,
+        completionTime: gameData.completionTime,
+        teamFinished: gameData.teamFinished,
+        totalTeamSize: gameData.totalTeamSize,
+        averageFatigue: gameData.averageFatigue,
+        budgetUsed: gameData.budgetUsed,
+        budgetLimit: 5000,
+        eventsHandled: gameData.eventsHandled || 0,
+        mechanicalFailures: gameData.mechanicalFailures || 0,
+        weatherChallenges: gameData.weatherChallenges || 0,
+        teamComposition: gameData.team?.members?.map(m => m.type) || [],
+        route: '一日北高挑戰',
+      });
+
+      if (result && result.success) {
+        setGlobalRank(result.rank);
+        setShowRankAnimation(true);
+        console.log('Score submitted successfully! Rank:', result.rank);
+      }
+    } catch (error) {
+      console.error('Failed to submit score to Firebase:', error);
+      // Don't block UI if submission fails
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     if (!summary) {
@@ -28,7 +68,7 @@ function ResultsPage() {
     // Clear saved game state since race is complete
     clearGameState();
 
-    // Save score to leaderboard
+    // Save score to leaderboard (local and global)
     if (summary.completed) {
       const scoreData = calculateFinalScore({
         completionTime: summary.completionTime,
@@ -42,11 +82,25 @@ function ResultsPage() {
         weatherChallenges: summary.stats?.weatherChallenges || 0,
       });
 
+      // Save to local storage
       addToLeaderboard({
         totalScore: scoreData.totalScore,
         completionTime: summary.completionTime,
         teamFinished: summary.teamFinished,
         totalTeamSize: summary.totalTeamSize,
+      });
+
+      // Submit to global leaderboard with Firebase
+      submitToGlobalLeaderboard(scoreData, {
+        completionTime: summary.completionTime,
+        teamFinished: summary.teamFinished,
+        totalTeamSize: summary.totalTeamSize,
+        averageFatigue: summary.averageFatigue,
+        budgetUsed: gameState?.bike?.totalCost + gameState?.team?.members.reduce((sum, m) => sum + m.cost, 0) || 0,
+        eventsHandled: summary.stats?.eventsHandled || 0,
+        mechanicalFailures: summary.stats?.mechanicalFailures || 0,
+        weatherChallenges: summary.stats?.weatherChallenges || 0,
+        team: gameState?.team,
       });
     }
 
@@ -121,7 +175,7 @@ function ResultsPage() {
         </div>
 
         {/* Final Score */}
-        <div ref={scoreRef} className="bg-white rounded-3xl p-12 shadow-2xl mb-8 text-center">
+        <div ref={scoreRef} className="bg-white rounded-3xl p-12 shadow-2xl mb-8 text-center relative">
           <div className="text-lg text-neutral-600 mb-2">最終分數</div>
           <div className={`text-8xl font-bold mb-4 ${rankInfo.color}`}>
             {scoreData.totalScore}
@@ -130,6 +184,19 @@ function ResultsPage() {
             評級: {rankInfo.rank}
           </div>
           <div className="text-xl text-neutral-600">{rankInfo.desc}</div>
+
+          {/* Global Rank Display */}
+          {globalRank && showRankAnimation && (
+            <div className="mt-6 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl">
+              <div className="flex items-center justify-center gap-3">
+                <Trophy className="w-8 h-8 text-yellow-600" />
+                <div className="text-2xl font-bold text-gray-800">
+                  全球排名：第 <span className="text-orange-600 text-3xl">{globalRank}</span> 名
+                </div>
+                <TrendingUp className="w-8 h-8 text-green-500 animate-bounce" />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Stats Cards */}
@@ -203,6 +270,18 @@ function ResultsPage() {
           >
             🔄 再玩一次
           </Button>
+
+          <button
+            onClick={() => navigate('/leaderboard')}
+            className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500
+                     text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl
+                     transform hover:scale-105 transition-all duration-300
+                     flex items-center justify-center gap-2"
+            disabled={submitting}
+          >
+            <Trophy className="w-6 h-6" />
+            查看完整排行榜
+          </button>
 
           <Button
             size="lg"

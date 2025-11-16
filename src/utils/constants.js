@@ -20,6 +20,21 @@ export const FORMATION_BONUSES = {
   [FORMATION_TYPES.TRAIN]: 0.25,  // 25% reduction
 };
 
+// Formation Penalties for uphill terrain
+export const FORMATION_PENALTIES = {
+  [FORMATION_TYPES.SINGLE]: 0,    // No penalty
+  [FORMATION_TYPES.DOUBLE]: 0.05, // 5% speed penalty on uphill
+  [FORMATION_TYPES.TRAIN]: 0.10,  // 10% speed penalty on uphill (harder to maintain tight formation)
+};
+
+// Stamina drain multipliers
+export const STAMINA_DRAIN = {
+  LEADER: 2.0,    // Leader drains 2x stamina (increased from 1.5x)
+  FOLLOWER: 1.0,  // Followers drain normal stamina
+  LOW_STAMINA_THRESHOLD: 30, // Auto-rotate when below 30%
+  CRITICAL_THRESHOLD: 15,    // Performance penalty below 15%
+};
+
 // Game Constants
 export const TOTAL_DISTANCE = 380; // km (Taipei to Kaohsiung)
 export const TIME_LIMIT = 24 * 60 * 60; // 24 hours in seconds
