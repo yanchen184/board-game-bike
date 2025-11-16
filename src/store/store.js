@@ -5,8 +5,11 @@ import bikeReducer from './bikeSlice';
 import playerReducer from './playerSlice';
 import { loadGameState, saveGameState } from '../services/storage';
 
-// Load persisted state
-const persistedState = loadGameState();
+// Load persisted state - only use if valid
+const loadedState = loadGameState();
+const persistedState = loadedState && typeof loadedState === 'object' && loadedState.game
+  ? loadedState
+  : undefined;
 
 // Debounce helper for saving
 let saveTimeout = null;
