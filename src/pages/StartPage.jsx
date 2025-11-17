@@ -159,6 +159,13 @@ function StartPage() {
             <div className="text-sm opacity-80">種角色類型</div>
           </div>
         </div>
+
+        {/* Version Info */}
+        <div className="mt-8 text-center">
+          <p className="text-white text-sm opacity-60">
+            Version 0.1.0 · 新增新手教學系統
+          </p>
+        </div>
       </div>
     </div>
   );
