@@ -97,11 +97,11 @@ function SetupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 py-8 px-4">
+    <div className="min-h-screen bg-neutral-50 py-8 px-4" data-testid="setup-page">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-neutral-900 mb-4">遊戲設定</h1>
+          <h1 className="text-4xl font-bold text-neutral-900 mb-4" data-testid="setup-title">遊戲設定</h1>
 
           {/* Progress Steps */}
           <div className="flex gap-4 mb-6">
@@ -173,6 +173,7 @@ function SetupPage() {
                     className={bikeStats.frame?.id === frame.id ? 'ring-4 ring-primary-orange' : ''}
                     hover
                     onClick={() => handleSelectBikePart('frame', frame)}
+                    data-testid={`equipment-card-frame-${frame.id}`}
                   >
                     <h4 className="font-bold mb-2">{frame.name}</h4>
                     <div className="text-sm text-neutral-600 mb-3">{frame.description}</div>
@@ -196,6 +197,7 @@ function SetupPage() {
                     className={bikeStats.wheels?.id === wheels.id ? 'ring-4 ring-primary-orange' : ''}
                     hover
                     onClick={() => handleSelectBikePart('wheels', wheels)}
+                    data-testid={`equipment-card-wheels-${wheels.id}`}
                   >
                     <h4 className="font-bold mb-2">{wheels.name}</h4>
                     <div className="text-sm text-neutral-600 mb-3">{wheels.description}</div>
@@ -219,6 +221,7 @@ function SetupPage() {
                     className={bikeStats.gears?.id === gears.id ? 'ring-4 ring-primary-orange' : ''}
                     hover
                     onClick={() => handleSelectBikePart('gears', gears)}
+                    data-testid={`equipment-card-gears-${gears.id}`}
                   >
                     <h4 className="font-bold mb-2">{gears.name}</h4>
                     <div className="text-sm text-neutral-600 mb-3">{gears.description}</div>
@@ -263,11 +266,12 @@ function SetupPage() {
           <Button
             variant="secondary"
             onClick={() => (step > 0 ? setStep(step - 1) : navigate('/'))}
+            data-testid="back-button"
           >
             {step === 0 ? '返回主選單' : '上一步'}
           </Button>
 
-          <Button onClick={handleNext} disabled={!canProceed()}>
+          <Button onClick={handleNext} disabled={!canProceed()} data-testid="next-button">
             {step === 2 ? '開始挑戰！' : '下一步'}
           </Button>
         </div>

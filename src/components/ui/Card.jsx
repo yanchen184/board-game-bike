@@ -2,7 +2,7 @@ import { memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-const Card = memo(({ children, className, onClick, hover = false }) => {
+const Card = memo(({ children, className, onClick, hover = false, ...rest }) => {
   return (
     <div
       className={clsx(
@@ -13,6 +13,7 @@ const Card = memo(({ children, className, onClick, hover = false }) => {
         className
       )}
       onClick={onClick}
+      {...rest}
     >
       {children}
     </div>

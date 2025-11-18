@@ -139,6 +139,10 @@ body {
   animation: scaleUp var(--duration-normal) var(--ease-bounce) forwards;
 }
 
+.animate-bounce-in {
+  animation: bounceIn 0.5s var(--ease-bounce) forwards;
+}
+
 /* 關鍵影格定義 */
 @keyframes fadeIn {
   from {

@@ -86,6 +86,7 @@ function StartPage() {
         {/* Title */}
         <h1
           ref={titleRef}
+          data-testid="game-title"
           className="text-6xl md:text-8xl font-bold text-white mb-6 text-gradient"
         >
           一日北高挑戰
@@ -106,16 +107,17 @@ function StartPage() {
         {/* Buttons */}
         <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           {hasSavedGame && (
-            <Button size="lg" variant="primary" onClick={handleContinue}>
+            <Button size="lg" variant="primary" onClick={handleContinue} data-testid="continue-button">
               ▶️ 繼續遊戲
             </Button>
           )}
 
-          <Button size="lg" onClick={handleStart}>
+          <Button size="lg" onClick={handleStart} data-testid="start-button">
             🚴 {hasSavedGame ? '新遊戲' : '開始挑戰'}
           </Button>
 
           <button
+            data-testid="leaderboard-button"
             onClick={() => navigate('/leaderboard')}
             className="relative px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500
                      text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl
@@ -136,7 +138,7 @@ function StartPage() {
             </span>
           </button>
 
-          <Button size="lg" variant="secondary" onClick={() => setShowHelp(true)}>
+          <Button size="lg" variant="secondary" onClick={() => setShowHelp(true)} data-testid="help-button">
             📖 遊戲說明
           </Button>
         </div>

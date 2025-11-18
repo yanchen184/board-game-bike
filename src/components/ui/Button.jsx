@@ -10,6 +10,8 @@ const Button = memo(({
   disabled = false,
   className,
   type = 'button',
+  'data-testid': dataTestId,
+  ...rest
 }) => {
   const baseClasses = 'btn-base font-semibold transition-all duration-300';
 
@@ -38,6 +40,8 @@ const Button = memo(({
       )}
       onClick={onClick}
       disabled={disabled}
+      data-testid={dataTestId}
+      {...rest}
     >
       {children}
     </button>

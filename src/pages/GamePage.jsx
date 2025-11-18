@@ -1,14 +1,16 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 import Button from '../components/ui/Button';
 import ProgressBar from '../components/ui/ProgressBar';
 import Loading from '../components/ui/Loading';
 import HelpModal from '../components/HelpModal';
 import TutorialOverlay from '../components/TutorialOverlay';
+import SupplyStationModal from '../components/SupplyStationModal';
 import { useGameLoop } from '../hooks/useGameLoop';
 import { initializeRaceState, updateRaceState, getRaceSummary } from '../services/gameEngine';
-import { getSegmentAtDistance } from '../data/routes';
+import { getSegmentAtDistance, getNextSupplyStation } from '../data/routes';
 
 function GamePage() {
   const navigate = useNavigate();
@@ -20,6 +22,10 @@ function GamePage() {
   const [isPaused, setIsPaused] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [timeScale, setTimeScale] = useState(10); // 預設 10x 加速
+  const [showSupplyStation, setShowSupplyStation] = useState(false);
+  const [currentSupplyStation, setCurrentSupplyStation] = useState(null);
+  const [lastSupplyCheck, setLastSupplyCheck] = useState(0);
 
   // Initialize race
   useEffect(() => {
@@ -53,9 +59,23 @@ function GamePage() {
   // Game loop
   const handleGameTick = useCallback(
     deltaTime => {
-      if (!gameState) return;
+      if (!gameState || showSupplyStation) return;
 
       const newState = updateRaceState(gameState, deltaTime);
+
+      // Check for supply stations
+      const nextStation = getNextSupplyStation(newState.distance);
+      if (nextStation && newState.distance >= nextStation.distance && newState.distance - lastSupplyCheck > 10) {
+        // Reached a supply station
+        setLastSupplyCheck(newState.distance);
+        setCurrentSupplyStation(nextStation);
+        setShowSupplyStation(true);
+        setIsPaused(true);
+        toast.success(`到達補給站：${nextStation.name}`);
+        setGameState(newState);
+        return;
+      }
+
       setGameState(newState);
 
       // Check if race is complete
@@ -67,10 +87,10 @@ function GamePage() {
         }, 1000);
       }
     },
-    [gameState, navigate]
+    [gameState, navigate, showSupplyStation, lastSupplyCheck]
   );
 
-  useGameLoop(handleGameTick, isPaused || !gameState);
+  useGameLoop(handleGameTick, isPaused || !gameState || showSupplyStation, timeScale);
 
   // Memoized calculations
   const currentSegment = useMemo(
@@ -108,12 +128,68 @@ function GamePage() {
     navigate('/setup');
   }, [navigate]);
 
+  // 換領騎功能
+  const handleChangeLeader = useCallback(() => {
+    if (!gameState) return;
+
+    const currentLeader = gameState.team.currentLeader;
+    const nextLeader = (currentLeader + 1) % gameState.team.members.length;
+
+    setGameState(prev => ({
+      ...prev,
+      team: {
+        ...prev.team,
+        currentLeader: nextLeader,
+      },
+    }));
+
+    toast.success(`${gameState.team.members[nextLeader].name} 接手領騎！`);
+  }, [gameState]);
+
+  // 補給站決策處理
+  const handleSupplyDecision = useCallback(
+    decision => {
+      setShowSupplyStation(false);
+      setIsPaused(false);
+
+      if (decision === 'rest') {
+        // 停留補給：恢復更多體力但損失時間
+        setGameState(prev => ({
+          ...prev,
+          timeElapsed: prev.timeElapsed + 15 * 60, // 增加 15 分鐘
+          team: {
+            ...prev.team,
+            members: prev.team.members.map(m => ({
+              ...m,
+              currentStamina: Math.min(100, m.currentStamina + 30),
+            })),
+          },
+        }));
+        toast.success('✅ 完成補給！體力恢復 30%，時間 +15 分鐘');
+      } else {
+        // 快速通過：少量恢復體力
+        setGameState(prev => ({
+          ...prev,
+          team: {
+            ...prev.team,
+            members: prev.team.members.map(m => ({
+              ...m,
+              currentStamina: Math.min(100, m.currentStamina + 10),
+            })),
+          },
+        }));
+        toast.success('⚡ 快速通過！體力恢復 10%');
+      }
+    },
+    []
+  );
+
   if (!gameState) {
     return <Loading fullscreen message="初始化比賽..." />;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-radial py-8 px-4">
+    <div className="min-h-screen bg-gradient-radial py-8 px-4" data-testid="game-page">
       <div className="max-w-6xl mx-auto">
         {/* Game Title & Info Banner */}
         <div className="bg-white rounded-xl shadow-lg p-4 mb-6 border-l-4 border-primary-orange">
@@ -137,12 +213,12 @@ function GamePage() {
 
         {/* Header Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="glass-dark p-6 rounded-xl text-white hover:scale-105 transition-transform">
+          <div className="glass-dark p-6 rounded-xl text-white hover:scale-105 transition-transform" data-testid="distance-stat">
             <div className="text-sm opacity-80 mb-1 flex items-center gap-2">
               <span>📍</span>
               <span>距離</span>
             </div>
-            <div className="text-3xl font-bold">
+            <div className="text-3xl font-bold" data-testid="distance-value">
               {Math.round(gameState.distance)} / {gameState.totalDistance} km
             </div>
             <div className="text-xs opacity-60 mt-1">
@@ -150,23 +226,23 @@ function GamePage() {
             </div>
           </div>
 
-          <div className="glass-dark p-6 rounded-xl text-white hover:scale-105 transition-transform">
+          <div className="glass-dark p-6 rounded-xl text-white hover:scale-105 transition-transform" data-testid="time-stat">
             <div className="text-sm opacity-80 mb-1 flex items-center gap-2">
               <span>⏱️</span>
               <span>時間</span>
             </div>
-            <div className="text-3xl font-bold">{formatTime(gameState.timeElapsed)}</div>
+            <div className="text-3xl font-bold" data-testid="time-value">{formatTime(gameState.timeElapsed)}</div>
             <div className="text-xs opacity-60 mt-1">
               限時 24:00:00
             </div>
           </div>
 
-          <div className="glass-dark p-6 rounded-xl text-white hover:scale-105 transition-transform">
+          <div className="glass-dark p-6 rounded-xl text-white hover:scale-105 transition-transform" data-testid="speed-stat">
             <div className="text-sm opacity-80 mb-1 flex items-center gap-2">
               <span>💨</span>
               <span>速度</span>
             </div>
-            <div className="text-3xl font-bold">{Math.round(gameState.speed)} km/h</div>
+            <div className="text-3xl font-bold" data-testid="speed-value">{Math.round(gameState.speed)} km/h</div>
             <div className="text-xs opacity-60 mt-1">
               預估完成時間: {((gameState.totalDistance - gameState.distance) / gameState.speed).toFixed(1)}h
             </div>
@@ -271,19 +347,79 @@ function GamePage() {
           </div>
         </div>
 
-        {/* Controls */}
-        <div className="flex justify-center gap-4">
-          <Button onClick={handlePauseToggle}>{isPaused ? '▶️ 繼續' : '⏸️ 暫停'}</Button>
+        {/* Game Controls - 時間加速 */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold">⚡ 遊戲速度</h3>
+            <div className="text-sm text-neutral-600">
+              當前速度: <span className="font-bold text-primary-orange">{timeScale}x</span>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 gap-3">
+            {[1, 5, 10, 50].map(speed => (
+              <Button
+                key={speed}
+                onClick={() => {
+                  setTimeScale(speed);
+                  toast.success(`遊戲速度調整為 ${speed}x`);
+                }}
+                className={timeScale === speed ? 'ring-4 ring-primary-orange' : ''}
+                variant={timeScale === speed ? 'primary' : 'secondary'}
+              >
+                {speed}x
+              </Button>
+            ))}
+          </div>
+          <div className="mt-3 text-xs text-neutral-500 text-center">
+            💡 建議使用 10x 或 50x 速度快速完成遊戲（約 2-5 分鐘）
+          </div>
+        </div>
 
-          <Button variant="secondary" onClick={handleBackToSetup}>
+        {/* Action Controls - 換領騎 */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold">🎮 戰術操作</h3>
+            <div className="text-sm text-neutral-600">
+              主動管理團隊狀態
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Button
+              onClick={handleChangeLeader}
+              className="bg-gradient-sunset text-white py-4"
+              disabled={!gameState || gameState.team.members.length < 2}
+            >
+              <div className="text-center">
+                <div className="text-2xl mb-1">🔄</div>
+                <div className="font-bold">換領騎</div>
+                <div className="text-xs opacity-90">輪換領騎者避免體力耗盡</div>
+              </div>
+            </Button>
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-4 flex items-center justify-center">
+              <div className="text-center text-sm text-neutral-600">
+                <div className="mb-2">💡 策略提示</div>
+                <div>當前領騎體力低於 40% 時</div>
+                <div>建議換領騎！</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="flex flex-wrap justify-center gap-3">
+          <Button onClick={handlePauseToggle} data-testid="pause-button">
+            {isPaused ? '▶️ 繼續' : '⏸️ 暫停'}
+          </Button>
+
+          <Button variant="secondary" onClick={handleBackToSetup} data-testid="back-to-setup-button">
             🏠 返回設定
           </Button>
 
-          <Button variant="secondary" onClick={() => setShowHelp(true)}>
+          <Button variant="secondary" onClick={() => setShowHelp(true)} data-testid="help-button">
             📖 遊戲說明
           </Button>
 
-          <Button variant="secondary" onClick={() => setShowTutorial(true)}>
+          <Button variant="secondary" onClick={() => setShowTutorial(true)} data-testid="tutorial-button">
             🎓 重看教學
           </Button>
         </div>
@@ -315,6 +451,13 @@ function GamePage() {
         isOpen={showTutorial}
         onClose={() => setShowTutorial(false)}
         onComplete={handleTutorialComplete}
+      />
+
+      {/* Supply Station Modal */}
+      <SupplyStationModal
+        isOpen={showSupplyStation}
+        stationName={currentSupplyStation?.name || ''}
+        onDecision={handleSupplyDecision}
       />
     </div>
   );
