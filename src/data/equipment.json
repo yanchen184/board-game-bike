@@ -1,0 +1,766 @@
+{
+  "frames": [
+    {
+      "id": "steel_classic",
+      "name": "ü¡“x",
+      "nameEn": "Steel Classic",
+      "level": 1,
+      "weight": 10.5,
+      "aerodynamics": 55,
+      "stiffness": 70,
+      "comfort": 85,
+      "durability": 95,
+      "price": 800,
+      "specialEffect": {
+        "type": "reliability",
+        "description": "~NEœ",
+        "failureRate": -0.95
+      },
+      "bestFor": ["endurance", "domestique"]
+    },
+    {
+      "id": "aluminum_entry",
+      "name": "ÁÑe€",
+      "nameEn": "Aluminum Entry",
+      "level": 1,
+      "weight": 9.0,
+      "aerodynamics": 65,
+      "stiffness": 75,
+      "comfort": 70,
+      "durability": 85,
+      "price": 1200,
+      "specialEffect": {
+        "type": "balanced",
+        "description": "saKx"
+      },
+      "bestFor": ["allrounder", "rookie"]
+    },
+    {
+      "id": "aluminum_race",
+      "name": "ÁÑöý",
+      "nameEn": "Aluminum Race",
+      "level": 2,
+      "weight": 8.2,
+      "aerodynamics": 72,
+      "stiffness": 82,
+      "comfort": 65,
+      "durability": 80,
+      "price": 1800,
+      "specialEffect": {
+        "type": "climbing",
+        "description": ",a+5%",
+        "climbingBonus": 0.05
+      },
+      "bestFor": ["climber", "allrounder"]
+    },
+    {
+      "id": "carbon_entry",
+      "name": "³–e€",
+      "nameEn": "Carbon Entry",
+      "level": 2,
+      "weight": 7.5,
+      "aerodynamics": 78,
+      "stiffness": 85,
+      "comfort": 75,
+      "durability": 70,
+      "price": 2500,
+      "specialEffect": {
+        "type": "vibration",
+        "description": "/Õ86+10%",
+        "comfortBonus": 0.1
+      },
+      "bestFor": ["domestique", "allrounder"]
+    },
+    {
+      "id": "carbon_race",
+      "name": "³–öý",
+      "nameEn": "Carbon Race",
+      "level": 3,
+      "weight": 6.8,
+      "aerodynamics": 85,
+      "stiffness": 90,
+      "comfort": 72,
+      "durability": 65,
+      "price": 3500,
+      "specialEffect": {
+        "type": "speed",
+        "description": "¦+3%",
+        "speedBonus": 0.03
+      },
+      "bestFor": ["sprinter", "time_trialist"]
+    },
+    {
+      "id": "aero_frame",
+      "name": "z#Õ›",
+      "nameEn": "Aero Frame",
+      "level": 3,
+      "weight": 7.2,
+      "aerodynamics": 95,
+      "stiffness": 88,
+      "comfort": 60,
+      "durability": 68,
+      "price": 4000,
+      "specialEffect": {
+        "type": "wind_resistance",
+        "description": "¨;-15%",
+        "windResistanceReduction": -0.15
+      },
+      "bestFor": ["time_trialist", "sprinter"]
+    },
+    {
+      "id": "ultra_light",
+      "name": "…,a",
+      "nameEn": "Ultra Light Climbing",
+      "level": 4,
+      "weight": 5.9,
+      "aerodynamics": 82,
+      "stiffness": 92,
+      "comfort": 68,
+      "durability": 60,
+      "price": 5500,
+      "specialEffect": {
+        "type": "climbing",
+        "description": ",a+12%",
+        "climbingBonus": 0.12
+      },
+      "bestFor": ["climber"]
+    },
+    {
+      "id": "all_rounder_pro",
+      "name": "hý",
+      "nameEn": "Pro All-Rounder",
+      "level": 4,
+      "weight": 6.5,
+      "aerodynamics": 88,
+      "stiffness": 93,
+      "comfort": 78,
+      "durability": 75,
+      "price": 6000,
+      "specialEffect": {
+        "type": "all_stats",
+        "description": "hl'+5%",
+        "allStatsBonus": 0.05
+      },
+      "bestFor": ["allrounder"]
+    },
+    {
+      "id": "time_trial_special",
+      "name": "Bý(",
+      "nameEn": "Time Trial Special",
+      "level": 5,
+      "weight": 7.8,
+      "aerodynamics": 100,
+      "stiffness": 95,
+      "comfort": 55,
+      "durability": 65,
+      "price": 8000,
+      "specialEffect": {
+        "type": "solo_speed",
+        "description": "®Û¦+10%",
+        "soloSpeedBonus": 0.1
+      },
+      "bestFor": ["time_trialist"]
+    },
+    {
+      "id": "legendary",
+      "name": "³GK\",
+      "nameEn": "Legendary",
+      "level": 5,
+      "weight": 6.2,
+      "aerodynamics": 92,
+      "stiffness": 98,
+      "comfort": 82,
+      "durability": 85,
+      "price": 12000,
+      "specialEffect": {
+        "type": "legendary",
+        "description": "hl'+8%EœM«",
+        "allStatsBonus": 0.08,
+        "failureImmunity": true
+      },
+      "bestFor": ["all"]
+    }
+  ],
+  "wheelsets": [
+    {
+      "id": "training_aluminum",
+      "name": "ôÁ*",
+      "nameEn": "Training Aluminum",
+      "level": 1,
+      "rimDepth": 25,
+      "weight": 1850,
+      "aerodynamics": 60,
+      "stability": 90,
+      "rollingResistance": 70,
+      "price": 400,
+      "specialEffect": {
+        "type": "durability",
+        "description": "(¦+30%",
+        "durabilityBonus": 0.3
+      },
+      "weatherAdaptation": {
+        "clear": 3,
+        "rain": 4,
+        "crosswind": 4,
+        "hot": 3,
+        "cold": 4
+      }
+    },
+    {
+      "id": "aluminum_climbing",
+      "name": "ÁÑ,a",
+      "nameEn": "Aluminum Climbing",
+      "level": 1,
+      "rimDepth": 30,
+      "weight": 1650,
+      "aerodynamics": 65,
+      "stability": 85,
+      "rollingResistance": 75,
+      "price": 600,
+      "specialEffect": {
+        "type": "weight_reduction",
+        "description": ",aBÍÏ-10%",
+        "climbingWeightReduction": -0.1
+      },
+      "weatherAdaptation": {
+        "clear": 4,
+        "rain": 3,
+        "crosswind": 4,
+        "hot": 3,
+        "cold": 3
+      }
+    },
+    {
+      "id": "carbon_entry",
+      "name": "³–e€",
+      "nameEn": "Carbon Entry",
+      "level": 2,
+      "rimDepth": 35,
+      "weight": 1550,
+      "aerodynamics": 72,
+      "stability": 82,
+      "rollingResistance": 80,
+      "price": 1000,
+      "specialEffect": {
+        "type": "balanced",
+        "description": "sa'ý"
+      },
+      "weatherAdaptation": {
+        "clear": 4,
+        "rain": 3,
+        "crosswind": 3,
+        "hot": 4,
+        "cold": 3
+      }
+    },
+    {
+      "id": "carbon_climbing",
+      "name": "³–,a",
+      "nameEn": "Carbon Climbing",
+      "level": 2,
+      "rimDepth": 35,
+      "weight": 1350,
+      "aerodynamics": 70,
+      "stability": 80,
+      "rollingResistance": 82,
+      "price": 1500,
+      "specialEffect": {
+        "type": "climbing",
+        "description": ",a+8%",
+        "climbingBonus": 0.08
+      },
+      "weatherAdaptation": {
+        "clear": 4,
+        "rain": 3,
+        "crosswind": 4,
+        "hot": 3,
+        "cold": 3
+      }
+    },
+    {
+      "id": "all_rounder_carbon",
+      "name": "hý³*",
+      "nameEn": "All-Round Carbon",
+      "level": 3,
+      "rimDepth": 45,
+      "weight": 1450,
+      "aerodynamics": 78,
+      "stability": 78,
+      "rollingResistance": 85,
+      "price": 2000,
+      "specialEffect": {
+        "type": "versatile",
+        "description": "iÉ.ïÁ",
+        "terrainAdaptation": 0.1
+      },
+      "weatherAdaptation": {
+        "clear": 4,
+        "rain": 3,
+        "crosswind": 3,
+        "hot": 4,
+        "cold": 3
+      }
+    },
+    {
+      "id": "aero_carbon",
+      "name": "zÕ³*",
+      "nameEn": "Aero Carbon",
+      "level": 3,
+      "rimDepth": 60,
+      "weight": 1600,
+      "aerodynamics": 88,
+      "stability": 70,
+      "rollingResistance": 83,
+      "price": 2500,
+      "specialEffect": {
+        "type": "flat_speed",
+        "description": "sï¦+5%",
+        "flatSpeedBonus": 0.05
+      },
+      "weatherAdaptation": {
+        "clear": 5,
+        "rain": 2,
+        "crosswind": 1,
+        "hot": 4,
+        "cold": 2
+      }
+    },
+    {
+      "id": "deep_rim",
+      "name": "ñFöý",
+      "nameEn": "Deep Rim Race",
+      "level": 4,
+      "rimDepth": 80,
+      "weight": 1750,
+      "aerodynamics": 95,
+      "stability": 60,
+      "rollingResistance": 85,
+      "price": 3500,
+      "specialEffect": {
+        "type": "wind_resistance",
+        "description": "¨;-20%",
+        "windResistanceReduction": -0.2
+      },
+      "weatherAdaptation": {
+        "clear": 5,
+        "rain": 2,
+        "crosswind": 1,
+        "hot": 4,
+        "cold": 2
+      }
+    },
+    {
+      "id": "disc_wheel",
+      "name": "Ÿ*",
+      "nameEn": "Disc Wheel",
+      "level": 4,
+      "rimDepth": 999,
+      "weight": 2100,
+      "aerodynamics": 100,
+      "stability": 50,
+      "rollingResistance": 88,
+      "price": 4000,
+      "specialEffect": {
+        "type": "time_trial",
+        "description": "Bý+15%",
+        "timeTrialBonus": 0.15
+      },
+      "weatherAdaptation": {
+        "clear": 5,
+        "rain": 2,
+        "crosswind": 1,
+        "hot": 4,
+        "cold": 2
+      }
+    },
+    {
+      "id": "ultra_light_pro",
+      "name": "…",
+      "nameEn": "Ultra Light Pro",
+      "level": 5,
+      "rimDepth": 40,
+      "weight": 1180,
+      "aerodynamics": 82,
+      "stability": 85,
+      "rollingResistance": 92,
+      "price": 5000,
+      "specialEffect": {
+        "type": "all_terrain",
+        "description": "h0b+7%",
+        "allTerrainBonus": 0.07
+      },
+      "weatherAdaptation": {
+        "clear": 5,
+        "rain": 4,
+        "crosswind": 4,
+        "hot": 4,
+        "cold": 4
+      }
+    },
+    {
+      "id": "legendary_wheels",
+      "name": "³G*D",
+      "nameEn": "Legendary Wheelset",
+      "level": 5,
+      "rimDepth": 50,
+      "weight": 1250,
+      "aerodynamics": 90,
+      "stability": 88,
+      "rollingResistance": 95,
+      "price": 8000,
+      "specialEffect": {
+        "type": "legendary",
+        "description": "¦+8%,a+8%",
+        "speedBonus": 0.08,
+        "climbingBonus": 0.08
+      },
+      "weatherAdaptation": {
+        "clear": 5,
+        "rain": 5,
+        "crosswind": 5,
+        "hot": 5,
+        "cold": 5
+      }
+    }
+  ],
+  "drivetrains": [
+    {
+      "id": "mechanical_entry",
+      "name": "_°e€",
+      "nameEn": "Mechanical Entry",
+      "level": 1,
+      "speeds": 18,
+      "precision": 70,
+      "efficiency": 85,
+      "weight": 380,
+      "durability": 90,
+      "price": 300,
+      "specialEffect": {
+        "type": "easy_maintenance",
+        "description": "­w",
+        "maintenanceBonus": 0.3
+      }
+    },
+    {
+      "id": "mechanical_standard",
+      "name": "_°–",
+      "nameEn": "Mechanical Standard",
+      "level": 1,
+      "speeds": 20,
+      "precision": 75,
+      "efficiency": 87,
+      "weight": 350,
+      "durability": 88,
+      "price": 500,
+      "specialEffect": {
+        "type": "reliability",
+        "description": "ï`(",
+        "failureRate": -0.5
+      }
+    },
+    {
+      "id": "mechanical_advanced",
+      "name": "_°2Ž",
+      "nameEn": "Mechanical Advanced",
+      "level": 2,
+      "speeds": 22,
+      "precision": 82,
+      "efficiency": 90,
+      "weight": 320,
+      "durability": 85,
+      "price": 800,
+      "specialEffect": {
+        "type": "climbing_gear",
+        "description": ",aRÔ+1",
+        "climbingEfficiency": 0.05
+      }
+    },
+    {
+      "id": "mechanical_pro",
+      "name": "_°",
+      "nameEn": "Mechanical Pro",
+      "level": 3,
+      "speeds": 22,
+      "precision": 88,
+      "efficiency": 93,
+      "weight": 290,
+      "durability": 82,
+      "price": 1200,
+      "specialEffect": {
+        "type": "shift_speed",
+        "description": "Š¦+20%",
+        "shiftSpeedBonus": 0.2
+      }
+    },
+    {
+      "id": "electronic_entry",
+      "name": "ûPe€",
+      "nameEn": "Electronic Entry",
+      "level": 3,
+      "speeds": 22,
+      "precision": 92,
+      "efficiency": 94,
+      "weight": 350,
+      "durability": 75,
+      "price": 2000,
+      "specialEffect": {
+        "type": "auto_trim",
+        "description": "êÕ®¿",
+        "autoOptimization": true
+      }
+    },
+    {
+      "id": "electronic_race",
+      "name": "ûPöý",
+      "nameEn": "Electronic Race",
+      "level": 4,
+      "speeds": 24,
+      "precision": 95,
+      "efficiency": 96,
+      "weight": 320,
+      "durability": 72,
+      "price": 3000,
+      "specialEffect": {
+        "type": "smart_shift",
+        "description": "zýŠ",
+        "terrainPrediction": true
+      }
+    },
+    {
+      "id": "electronic_pro",
+      "name": "ûPm",
+      "nameEn": "Electronic Pro",
+      "level": 4,
+      "speeds": 24,
+      "precision": 98,
+      "efficiency": 97,
+      "weight": 295,
+      "durability": 70,
+      "price": 4500,
+      "specialEffect": {
+        "type": "climbing_optimization",
+        "description": ",aêÕ*",
+        "climbingAutoOptimization": true,
+        "climbingEfficiency": 0.08
+      }
+    },
+    {
+      "id": "wireless_top",
+      "name": "!Ú",
+      "nameEn": "Wireless Top",
+      "level": 5,
+      "speeds": 26,
+      "precision": 99,
+      "efficiency": 98,
+      "weight": 280,
+      "durability": 68,
+      "price": 6000,
+      "specialEffect": {
+        "type": "perfect_shift",
+        "description": "ŒŽŠH‡+5%",
+        "efficiencyBonus": 0.05,
+        "teamSync": true
+      }
+    },
+    {
+      "id": "legendary_system",
+      "name": "³Gûq",
+      "nameEn": "Legendary System",
+      "level": 5,
+      "speeds": 30,
+      "precision": 100,
+      "efficiency": 99,
+      "weight": 260,
+      "durability": 80,
+      "price": 10000,
+      "specialEffect": {
+        "type": "legendary",
+        "description": "!+Šhl'+5%",
+        "allStatsBonus": 0.05,
+        "predictiveShift": true,
+        "seamlessShift": true
+      }
+    }
+  ],
+  "setBonus": {
+    "entry_level": {
+      "name": "e€ë",
+      "nameEn": "Entry Knight",
+      "requirement": {
+        "type": "level",
+        "value": 1,
+        "count": 2
+      },
+      "twoSet": {
+        "description": "E+10%",
+        "durabilityBonus": 0.1
+      },
+      "threeSet": {
+        "description": "E+20%ù<ÞK20%",
+        "durabilityBonus": 0.2,
+        "priceRefund": 0.2
+      }
+    },
+    "aluminum_warrior": {
+      "name": "ÁÑ0ë",
+      "nameEn": "Aluminum Warrior",
+      "requirement": {
+        "type": "material",
+        "value": "aluminum",
+        "count": 2
+      },
+      "twoSet": {
+        "description": "ÍÏ-5%",
+        "weightReduction": -0.05
+      },
+      "threeSet": {
+        "description": "ÍÏ-10%,a+5%",
+        "weightReduction": -0.1,
+        "climbingBonus": 0.05
+      }
+    },
+    "carbon_elite": {
+      "name": "³–¾ñ",
+      "nameEn": "Carbon Elite",
+      "requirement": {
+        "type": "material",
+        "value": "carbon",
+        "count": 2
+      },
+      "twoSet": {
+        "description": "¦+3%",
+        "speedBonus": 0.03
+      },
+      "threeSet": {
+        "description": "¦+5%¨;-8%",
+        "speedBonus": 0.05,
+        "windResistanceReduction": -0.08
+      }
+    },
+    "aero_master": {
+      "name": "zÕ'+",
+      "nameEn": "Aero Master",
+      "requirement": {
+        "type": "aerodynamic",
+        "value": 85,
+        "count": 2
+      },
+      "twoSet": {
+        "description": "¨;-10%",
+        "windResistanceReduction": -0.1
+      },
+      "threeSet": {
+        "description": "¨;-18%sï+8%",
+        "windResistanceReduction": -0.18,
+        "flatSpeedBonus": 0.08
+      }
+    },
+    "electronic_age": {
+      "name": "ûPBã",
+      "nameEn": "Electronic Age",
+      "requirement": {
+        "type": "electronic",
+        "value": true,
+        "count": 1
+      },
+      "twoSet": {
+        "description": "H‡+5%",
+        "efficiencyBonus": 0.05
+      },
+      "threeSet": {
+        "description": "H‡+8%zý©",
+        "efficiencyBonus": 0.08,
+        "smartAssist": true
+      }
+    },
+    "legendary_combo": {
+      "name": "³GD",
+      "nameEn": "Legendary Combo",
+      "requirement": {
+        "type": "level",
+        "value": 5,
+        "count": 2
+      },
+      "twoSet": {
+        "description": "hl'+10%",
+        "allStatsBonus": 0.1
+      },
+      "threeSet": {
+        "description": "hl'+15%!–)#",
+        "allStatsBonus": 0.15,
+        "weatherImmunity": true
+      }
+    }
+  },
+  "functionalSets": {
+    "climbing_set": {
+      "name": ",aWÝ",
+      "nameEn": "Climbing Set",
+      "combination": {
+        "frame": ["ultra_light", "aluminum_race"],
+        "wheelset": ["carbon_climbing", "aluminum_climbing"],
+        "drivetrain": ["mechanical_advanced", "electronic_pro"]
+      },
+      "effect": {
+        "description": ",aH‡+20%ÍÏ-15%",
+        "climbingEfficiency": 0.2,
+        "weightReduction": -0.15
+      }
+    },
+    "sprint_set": {
+      "name": "]:WÝ",
+      "nameEn": "Sprint Set",
+      "combination": {
+        "frame": ["aero_frame", "carbon_race"],
+        "wheelset": ["deep_rim", "aero_carbon"],
+        "drivetrain": ["electronic_race", "wireless_top"]
+      },
+      "effect": {
+        "description": "]:¦+25%¨;-25%",
+        "sprintBonus": 0.25,
+        "windResistanceReduction": -0.25
+      }
+    },
+    "endurance_set": {
+      "name": "EWÝ",
+      "nameEn": "Endurance Set",
+      "combination": {
+        "frame": ["steel_classic"],
+        "wheelset": ["training_aluminum"],
+        "drivetrain": ["mechanical_standard", "mechanical_entry"]
+      },
+      "effect": {
+        "description": "EœM«Ô›ˆ-10%",
+        "failureImmunity": true,
+        "staminaConsumptionReduction": -0.1
+      }
+    },
+    "all_rounder_set": {
+      "name": "hýWÝ",
+      "nameEn": "All-Rounder Set",
+      "combination": {
+        "frame": ["all_rounder_pro"],
+        "wheelset": ["all_rounder_carbon"],
+        "drivetrain": ["electronic_entry", "electronic_race"]
+      },
+      "effect": {
+        "description": "@	0biÉ¦+15%",
+        "terrainAdaptation": 0.15
+      }
+    },
+    "solo_set": {
+      "name": "®ÛWÝ",
+      "nameEn": "Solo Set",
+      "combination": {
+        "frame": ["time_trial_special"],
+        "wheelset": ["disc_wheel"],
+        "drivetrain": ["wireless_top", "legendary_system"]
+      },
+      "effect": {
+        "description": "®º¦+20%¨;-30%",
+        "soloSpeedBonus": 0.2,
+        "windResistanceReduction": -0.3
+      }
+    }
+  }
+}
