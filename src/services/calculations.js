@@ -1,4 +1,4 @@
-import { FORMATION_BONUSES, FORMATION_PENALTIES, STAMINA_DRAIN, TERRAIN_TYPES } from '../utils/constants';
+import { FORMATION_BONUSES, FORMATION_PENALTIES, STAMINA_DRAIN, STAMINA_RECOVERY, TERRAIN_TYPES } from '../utils/constants';
 
 /**
  * Calculate current speed based on team, bike, weather, and terrain
@@ -113,6 +113,45 @@ export function calculateStaminaDrain(speed, formation, terrain, memberIndex, cu
   }
 
   return baseDrain;
+}
+
+/**
+ * Calculate stamina recovery rate for followers
+ * @param {string} formation - Current formation
+ * @param {number} currentStamina - Current stamina level (0-100)
+ * @param {number} memberIndex - Index of team member
+ * @param {number} currentLeader - Index of current leader
+ * @returns {number} Stamina recovery per second (0 for leader, positive for followers)
+ */
+export function calculateStaminaRecovery(formation, currentStamina, memberIndex, currentLeader) {
+  // Leaders don't recover stamina while leading
+  const isLeader = memberIndex === currentLeader;
+  if (isLeader) {
+    return 0;
+  }
+
+  // Followers recover stamina while drafting
+  let recoveryRate = STAMINA_RECOVERY.BASE_RATE; // Base: 0.015% per second = 54% per hour
+
+  // Better formation = better recovery (drafting effect)
+  const formationBonus = FORMATION_BONUSES[formation] || 0;
+  const formationMultiplier = 1 + formationBonus * STAMINA_RECOVERY.FORMATION_MULTIPLIER;
+  recoveryRate *= formationMultiplier; // Up to 54% * 1.5 = 81% per hour in best formation
+
+  // Cap maximum recovery rate
+  recoveryRate = Math.min(recoveryRate, STAMINA_RECOVERY.MAX_RECOVERY_RATE);
+
+  // Faster recovery when stamina is very low (survival instinct / pacing)
+  if (currentStamina < 30) {
+    recoveryRate *= 1.3; // 30% faster recovery when exhausted
+  }
+
+  // Can't recover above 100%
+  if (currentStamina >= 100) {
+    return 0;
+  }
+
+  return recoveryRate;
 }
 
 /**

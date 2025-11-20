@@ -7,7 +7,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Loading from './components/ui/Loading';
 
 // 版本號
-const APP_VERSION = '0.1.0';
+const APP_VERSION = '1.1.1';
 
 // Lazy load pages for code splitting
 const StartPage = lazy(() => import('./pages/StartPage'));
@@ -21,8 +21,10 @@ function App() {
     // 顯示版本號在 console
     console.log('%c🚴 一日北高挑戰 Taipei to Kaohsiung Challenge', 'font-size: 16px; font-weight: bold; color: #FF6B35;');
     console.log('%cVersion: ' + APP_VERSION, 'font-size: 14px; color: #4ECDC4;');
-    console.log('%c✨ 新增功能: 新手教學系統 & UI 優化', 'font-size: 12px; color: #95E1D3;');
-    console.log('%c📖 查看改進詳情: GAME_UX_IMPROVEMENTS.md', 'font-size: 12px; color: #95E1D3;');
+    console.log('%c✨ v1.1.1 遊戲平衡重大更新', 'font-size: 12px; color: #95E1D3;');
+    console.log('%c🔋 新增跟騎體力恢復機制 - 現在可以完賽了！', 'font-size: 12px; color: #10b981;');
+    console.log('%c⚙️ 策略預設 | 🎬 30秒演示 | 🤖 智能模擬', 'font-size: 12px; color: #95E1D3;');
+    console.log('%c📖 查看詳情: docs/STAMINA_RECOVERY_SYSTEM.md', 'font-size: 12px; color: #95E1D3;');
   }, []);
 
   return (

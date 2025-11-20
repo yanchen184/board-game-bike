@@ -5,9 +5,11 @@ import toast from 'react-hot-toast';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import CharacterCard from '../components/CharacterCard';
+import StrategyConfig from '../components/StrategyConfig';
 import { addMember, setFormation } from '../store/teamSlice';
 import { selectFrame, selectWheels, selectGears } from '../store/bikeSlice';
 import { setPhase } from '../store/gameSlice';
+import { setStrategy } from '../store/strategySlice';
 import { charactersArray } from '../data/characters';
 import { bikeParts } from '../data/bikeParts';
 import { BUDGET_LIMIT, MIN_TEAM_SIZE, MAX_TEAM_SIZE, FORMATION_TYPES, GAME_PHASES } from '../utils/constants';
@@ -15,7 +17,7 @@ import { BUDGET_LIMIT, MIN_TEAM_SIZE, MAX_TEAM_SIZE, FORMATION_TYPES, GAME_PHASE
 function SetupPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [step, setStep] = useState(0); // 0: team, 1: bike, 2: formation
+  const [step, setStep] = useState(0); // 0: team, 1: bike, 2: formation, 3: strategy
 
   // Set game phase to SETUP when component mounts
   useEffect(() => {
@@ -25,6 +27,7 @@ function SetupPage() {
   const teamMembers = useSelector(state => state.team.members);
   const bikeStats = useSelector(state => state.bike);
   const formation = useSelector(state => state.team.formation);
+  const strategy = useSelector(state => state.strategy);
 
   // Calculate total cost
   const teamCost = teamMembers.reduce((sum, m) => sum + (m.cost || 0), 0);
@@ -73,10 +76,15 @@ function SetupPage() {
     toast.success(`已選擇 ${part.name}`);
   };
 
+  const handleStrategyChange = (newStrategy) => {
+    dispatch(setStrategy(newStrategy));
+  };
+
   const canProceed = () => {
     if (step === 0) return teamMembers.length >= MIN_TEAM_SIZE;
     if (step === 1) return bikeStats.frame && bikeStats.wheels && bikeStats.gears;
     if (step === 2) return true;
+    if (step === 3) return true;
     return false;
   };
 
@@ -87,11 +95,12 @@ function SetupPage() {
       return;
     }
 
-    if (step < 2) {
+    if (step < 3) {
       setStep(step + 1);
     } else {
       // Start race
       dispatch(setPhase(GAME_PHASES.RACING));
+      toast.success('開始挑戰！觀看自動演示...');
       navigate('/game');
     }
   };
@@ -105,7 +114,7 @@ function SetupPage() {
 
           {/* Progress Steps */}
           <div className="flex gap-4 mb-6">
-            {['選擇團隊', '配置裝備', '隊形設定'].map((label, idx) => (
+            {['選擇團隊', '配置裝備', '隊形設定', '策略設定'].map((label, idx) => (
               <div
                 key={idx}
                 className={`flex-1 p-4 rounded-lg text-center font-semibold transition-all ${
@@ -239,7 +248,7 @@ function SetupPage() {
 
         {step === 2 && (
           <div>
-            <h2 className="text-2xl font-bold mb-6">選擇破風隊形</h2>
+            <h2 className="text-2xl font-bold mb-6">選擇初始破風隊形</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { type: FORMATION_TYPES.SINGLE, name: '單線隊形', bonus: '20%', desc: '最大風阻減少' },
@@ -258,6 +267,20 @@ function SetupPage() {
                 </Card>
               ))}
             </div>
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+              <div className="text-sm text-blue-800">
+                💡 提示：在策略設定中，你可以設定遇到爬坡時自動切換隊形
+              </div>
+            </div>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div>
+            <StrategyConfig
+              onStrategyChange={handleStrategyChange}
+              initialStrategy={strategy}
+            />
           </div>
         )}
 
@@ -272,7 +295,7 @@ function SetupPage() {
           </Button>
 
           <Button onClick={handleNext} disabled={!canProceed()} data-testid="next-button">
-            {step === 2 ? '開始挑戰！' : '下一步'}
+            {step === 3 ? '🚀 開始挑戰！' : '下一步'}
           </Button>
         </div>
       </div>

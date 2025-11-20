@@ -3,6 +3,7 @@ import gameReducer from './gameSlice';
 import teamReducer from './teamSlice';
 import bikeReducer from './bikeSlice';
 import playerReducer from './playerSlice';
+import strategyReducer from './strategySlice';
 import { loadGameState, saveGameState } from '../services/storage';
 
 // Load persisted state - only use if valid
@@ -28,6 +29,7 @@ export const store = configureStore({
     team: teamReducer,
     bike: bikeReducer,
     player: playerReducer,
+    strategy: strategyReducer,
   },
   preloadedState: persistedState,
 });

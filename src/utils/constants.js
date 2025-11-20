@@ -35,6 +35,13 @@ export const STAMINA_DRAIN = {
   CRITICAL_THRESHOLD: 15,    // Performance penalty below 15%
 };
 
+// Stamina recovery rates (for followers)
+export const STAMINA_RECOVERY = {
+  BASE_RATE: 0.015,  // Base recovery: 0.015% per second = 54% per hour
+  FORMATION_MULTIPLIER: 2.0, // Formation bonus multiplier (max 50% boost)
+  MAX_RECOVERY_RATE: 0.025,  // Maximum recovery rate cap (90% per hour)
+};
+
 // Game Constants
 export const TOTAL_DISTANCE = 380; // km (Taipei to Kaohsiung)
 export const TIME_LIMIT = 24 * 60 * 60; // 24 hours in seconds

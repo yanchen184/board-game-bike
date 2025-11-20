@@ -1,4 +1,4 @@
-import { calculateSpeed, calculateStaminaDrain, calculateMoraleChange } from './calculations';
+import { calculateSpeed, calculateStaminaDrain, calculateStaminaRecovery, calculateMoraleChange } from './calculations';
 import { getSegmentAtDistance, getNextSupplyStation } from '../data/routes';
 import { getRandomEvent, getSupplyStationEvent } from '../data/events';
 
@@ -94,6 +94,9 @@ export function updateRaceState(currentState, deltaTime) {
 
   // 4. Update stamina for each team member
   newState.team.members = newState.team.members.map((member, idx) => {
+    const currentStamina = member.currentStamina || 100;
+
+    // Calculate stamina drain
     const drainRate =
       calculateStaminaDrain(
         newState.speed,
@@ -103,7 +106,17 @@ export function updateRaceState(currentState, deltaTime) {
         newState.team.currentLeader
       ) * effectMultipliers.staminaDrain;
 
-    const newStamina = Math.max(0, (member.currentStamina || 100) - drainRate * deltaTime);
+    // Calculate stamina recovery (for followers only)
+    const recoveryRate = calculateStaminaRecovery(
+      newState.team.formation,
+      currentStamina,
+      idx,
+      newState.team.currentLeader
+    );
+
+    // Net stamina change = recovery - drain
+    const netChange = (recoveryRate - drainRate) * deltaTime;
+    const newStamina = Math.max(0, Math.min(100, currentStamina + netChange));
 
     return {
       ...member,
